@@ -1,0 +1,219 @@
+{
+  "schema": "ai-codex/open-loop-registry/1",
+  "grammar": "FIELD: value",
+  "delimiter": "---",
+  "case_sensitive_field_names": true,
+  "unknown_field_policy": "invalid unless the selected TYPE schema explicitly permits an extension namespace",
+  "common_value_types": {
+    "string": "single physical line UTF-8 text after ': '",
+    "boolean": "literal true or false",
+    "path": "repository-relative or explicitly qualified artifact path",
+    "artifact_ref": "<path> | <purpose>"
+  },
+  "types": {
+    "TASK": {
+      "schema": "ai-codex/task/1",
+      "required": [
+        "TYPE",
+        "SCHEMA",
+        "FROM",
+        "FROM_ROLE",
+        "TO",
+        "TO_ROLE",
+        "PURPOSE",
+        "REPOSITORY",
+        "BASELINE",
+        "SCOPE",
+        "ACCEPTANCE",
+        "STOP_CONDITION",
+        "OUTPUT",
+        "STOP_AFTER_COMPLETION",
+        "ALLOWED",
+        "TEST",
+        "HANDBACK"
+      ],
+      "optional": [
+        "BRANCH",
+        "READ",
+        "FORBIDDEN",
+        "ATTACHMENT"
+      ],
+      "repeatable": [
+        "SCOPE",
+        "ALLOWED",
+        "FORBIDDEN",
+        "ACCEPTANCE",
+        "TEST",
+        "STOP_CONDITION",
+        "READ",
+        "ATTACHMENT",
+        "HANDBACK"
+      ],
+      "scalar": [
+        "TYPE",
+        "SCHEMA",
+        "FROM",
+        "FROM_ROLE",
+        "TO",
+        "TO_ROLE",
+        "PURPOSE",
+        "REPOSITORY",
+        "BRANCH",
+        "BASELINE",
+        "OUTPUT",
+        "STOP_AFTER_COMPLETION"
+      ],
+      "types": {
+        "STOP_AFTER_COMPLETION": "boolean",
+        "REPOSITORY": "string",
+        "BRANCH": "string",
+        "BASELINE": "string",
+        "OUTPUT": "path",
+        "READ": "path",
+        "ATTACHMENT": "path",
+        "ALLOWED": "string",
+        "TEST": "string",
+        "HANDBACK": "string"
+      },
+      "duplicate_behavior": {
+        "scalar": "invalid if the same scalar field appears more than once",
+        "repeatable": "append values in encounter order"
+      },
+      "semantic_constraints": [
+        "All load-bearing TASK content must be recoverable from the envelope without requiring the optional Markdown body.",
+        "ALLOWED, TEST, and HANDBACK must each appear at least once; use an explicit value such as 'none' or 'not applicable' only when that is truthfully the contract."
+      ]
+    },
+    "REVIEW_ASSIGNMENT": {
+      "schema": "ai-codex/review-assignment/1",
+      "required": [
+        "TYPE",
+        "SCHEMA",
+        "FROM",
+        "FROM_ROLE",
+        "TO",
+        "TO_ROLE",
+        "PURPOSE",
+        "REPOSITORY",
+        "CANDIDATE_REVISION",
+        "READ",
+        "OUTPUT",
+        "STOP_AFTER_COMPLETION"
+      ],
+      "optional": [
+        "BRANCH",
+        "CANDIDATE_MANIFEST",
+        "REVIEW_STAGE",
+        "REVIEWER_COUNT",
+        "ATTACHMENT"
+      ],
+      "repeatable": [
+        "READ",
+        "ATTACHMENT"
+      ],
+      "scalar": [
+        "TYPE",
+        "SCHEMA",
+        "FROM",
+        "FROM_ROLE",
+        "TO",
+        "TO_ROLE",
+        "PURPOSE",
+        "REPOSITORY",
+        "BRANCH",
+        "CANDIDATE_REVISION",
+        "CANDIDATE_MANIFEST",
+        "REVIEW_STAGE",
+        "REVIEWER_COUNT",
+        "OUTPUT",
+        "STOP_AFTER_COMPLETION"
+      ],
+      "types": {
+        "CANDIDATE_REVISION": "string",
+        "CANDIDATE_MANIFEST": "path",
+        "REVIEW_STAGE": "string",
+        "REVIEWER_COUNT": "string",
+        "OUTPUT": "path",
+        "READ": "path",
+        "ATTACHMENT": "path",
+        "STOP_AFTER_COMPLETION": "boolean"
+      },
+      "duplicate_behavior": {
+        "scalar": "invalid if the same scalar field appears more than once",
+        "repeatable": "append values in encounter order"
+      },
+      "semantic_constraints": [
+        "CANDIDATE_REVISION must identify the exact reviewed revision; structural validity does not waive exact-identity or authorized-reading-set obligations."
+      ]
+    },
+    "SERVICE_MEMO": {
+      "schema": "ai-codex/service-memo/1",
+      "required": [
+        "TYPE",
+        "SCHEMA",
+        "FROM",
+        "TO",
+        "PURPOSE",
+        "SUMMARY"
+      ],
+      "optional": [
+        "FROM_ROLE",
+        "TO_ROLE",
+        "REPOSITORY",
+        "BRANCH",
+        "REVISION",
+        "RESULT",
+        "ARTIFACT",
+        "READ",
+        "ATTACHMENT",
+        "NEXT_ACTION",
+        "STOP_AFTER_COMPLETION"
+      ],
+      "repeatable": [
+        "ARTIFACT",
+        "READ",
+        "ATTACHMENT"
+      ],
+      "scalar": [
+        "TYPE",
+        "SCHEMA",
+        "FROM",
+        "FROM_ROLE",
+        "TO",
+        "TO_ROLE",
+        "PURPOSE",
+        "SUMMARY",
+        "REPOSITORY",
+        "BRANCH",
+        "REVISION",
+        "RESULT",
+        "NEXT_ACTION",
+        "STOP_AFTER_COMPLETION"
+      ],
+      "types": {
+        "SUMMARY": "string",
+        "ARTIFACT": "artifact_ref",
+        "READ": "path",
+        "ATTACHMENT": "path",
+        "STOP_AFTER_COMPLETION": "boolean"
+      },
+      "duplicate_behavior": {
+        "scalar": "invalid if the same scalar field appears more than once",
+        "repeatable": "append values in encounter order"
+      },
+      "semantic_constraints": [
+        "If relevant repository/file artifacts exist, each relevant artifact must be represented by ARTIFACT using '<path> | <purpose>'; READ or ATTACHMENT alone do not satisfy the artifact-map obligation.",
+        "Structural validity does not make the memo authoritative; Service Memo remains transport/handoff only."
+      ]
+    }
+  },
+  "blank_line_before_delimiter_policy": "at most one empty physical line is allowed between the last FIELD line and the delimiter; it is ignored",
+  "empty_value_policy": "invalid unless the selected TYPE schema explicitly permits an empty value; no v1.1.0 TYPE permits empty load-bearing values",
+  "delimiter_policy": "when a Markdown body is present, the first physical line exactly equal to '---' after the envelope fields (optionally preceded by one allowed empty line) terminates the envelope; without a body, the delimiter may be omitted and EOF terminates the envelope",
+  "field_order_policy": "scalar field order is not significant; repeatable values preserve encounter order",
+  "duplicate_policy_default": {
+    "scalar": "invalid if the same scalar field appears more than once",
+    "repeatable": "valid; append each value in encounter order"
+  },
+  "structural_validation_note": "Registry/schema validity is necessary but not sufficient for semantic contract validity; normative artifact-content obligations still apply."
+}

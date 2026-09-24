@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai-codex/canon-record/1",
+  "title": "AI-Codex v1.1 Canon FORMAT-2 record",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "kind",
+    "release",
+    "source",
+    "text"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ai-codex/canon-record/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable record identity within this generated release. The shipped v1.1.0 generator derives it from source filename stem plus the documented synthetic anchor and fails on collisions."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "section",
+        "rule",
+        "term",
+        "decision",
+        "rationale",
+        "dependency",
+        "lifecycle"
+      ],
+      "description": "Semantic record kind. The shipped v1.1.0 generator currently emits section records; other enum values are reserved for compatible future tooling."
+    },
+    "release": {
+      "type": "string",
+      "const": "v1.1.0"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "file",
+        "anchor",
+        "file_blob"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchor": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Synthetic extraction selector documented in FORMAT2.md; not necessarily a literal Markdown/GitHub fragment."
+        },
+        "file_blob": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "norms": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "MUST",
+          "SHOULD",
+          "MAY"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Non-exhaustive retrieval hints. Load-bearing local § references may also be present only in text and are resolved by the FORMAT2.md local-section resolver."
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Complete machine-consumable semantic text for the extracted record granularity; not an excerpt-only search hint."
+    }
+  },
+  "additionalProperties": false
+}
