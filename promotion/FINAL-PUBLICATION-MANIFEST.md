@@ -70,7 +70,7 @@ Raw Working review artifacts are intentionally excluded from the public release 
 | `LICENSE` | `44b6627cf6a0b8aede41935d5fd5bec587e1f285` |
 | `promotion/PRE-PROMOTE-MANIFEST.md` | `92ddf04140918f2ba598692ad8a9be5ad372ba05` |
 | `promotion/PUBLICATION-STAGING-MANIFEST.md` | `b3bdae22439d27b2efd4c3effaa794a7268b1e20` |
-| `promotion/v1.1.0.md` | `e8945842ab9e72cf0ef1f2ce71d695e02d1d4daf` |
+| `promotion/v1.1.0.md` | `fcab444afe69efbee4c3df2a880a87ccad39dcdf` |
 | `README-RU.md` | `999aa25f96c676dadfb5897c750b571a82ad472a` |
 | `README.md` | `f658c2460bc3304faf122e2b9ad376ef8f3ce2e0` |
 | `RELEASE-MANIFEST.md` | `cdcd7bd24c3c7adb7b4278d3881b25c1b12a16fa` |
