@@ -2,6 +2,15 @@
 
 This file records released AI-Codex changes. Normative behavior is defined by `codex/index.md` and the documents it links.
 
+## Unreleased candidate — Promotion lifecycle normalization
+
+This section describes an in-review Candidate and does not assign a release version.
+
+- Makes Product Owner `PROMOTE` atomic with narrowly allowlisted lifecycle/self-reference normalization so a Canonical Revision cannot retain a contradictory `Candidate` / `NOT CANON` self-description.
+- Introduces Reviewed Frozen Identity vs Canonical Materialization Identity and requires Promotion Records to link both when status-only normalization changes bytes.
+- Defines the sole no-re-review exception for post-gate changes: lifecycle-only normalization mechanically implied by the same `PROMOTE`, with zero product-semantic diff.
+- Requires deterministic regeneration/revalidation of affected FORMAT-2 and manifest/source identities rather than hand-editing derived artifacts.
+- Adds a one-time, explicitly authorized project migration path for already-promoted Canon packages with stale Candidate-era lifecycle self-reference, without consuming fake new `RNNN` product revisions.
 ## v1.1.0
 
 Changes from **v1.0.0**.
