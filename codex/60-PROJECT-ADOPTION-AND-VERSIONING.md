@@ -45,7 +45,21 @@ A migration from v1.0.0 to v1.1.0 MUST explicitly evaluate at least:
 - bootstrap/preflight behavior changes;
 - any project-local Adoption text that previously permitted Candidate staging under `Canon/`.
 
-Historical immutable Canon content MUST NOT be silently rewritten merely to resemble the v1.1.0 reference layout. Structural normalization that changes Canon-visible material follows the applicable Candidate → Review → PROMOTE lifecycle.
+Historical immutable Canon content MUST NOT be silently rewritten merely to resemble a newer reference layout. Structural/product normalization that changes Canon-visible semantics follows the applicable Candidate → Review → PROMOTE lifecycle.
+
+A separately defined **legacy lifecycle-self-reference normalization migration** is permitted for already-promoted Canonical Revisions whose valid Promotion Record/current stable index says `CANONICAL` while their own package self-reference still says `Candidate`, `NOT CANON`, or equivalent. This migration does not consume a new `RNNN` and does not require a new product review only if all of the following hold:
+
+- the revision has valid historical gate evidence and Product Owner promotion authority;
+- the Product Owner issues one explicit normalization authorization identifying the affected revision(s); one authorization MAY cover multiple affected components in one project-wide migration;
+- every authored diff is inside the Promotion Lifecycle Normalization allowlist in `10-DECISION-STORAGE-SYSTEM.md` §8;
+- a mechanical check proves zero product-semantic diff;
+- any affected FORMAT-2/source-map/manifest identities are regenerated only as deterministic consequences of those allowlisted lifecycle changes;
+- the migration records, for every affected revision, the original Reviewed Frozen Identity, the pre-migration Canon identity, the resulting normalized Canonical Materialization Identity, and the allowed transformation evidence;
+- the migration is atomic per affected revision and MUST NOT leave a package half-normalized.
+
+If any affected revision cannot satisfy these conditions, that revision leaves this migration path and requires the ordinary Candidate → Review → PROMOTE lifecycle for its change.
+
+This migration is remediation for a packaging/lifecycle contradiction, not permission to rewrite historical product decisions or falsify the Codex version under which they were originally reviewed.
 
 ## 4. Compliance and deviation
 
