@@ -8,4 +8,4 @@ Start with [index.md](index.md).
 
 Markdown is the authored authoritative representation. Machine consumers may use [format2/index.jsonl](format2/index.jsonl), generated from the same frozen semantic state.
 
-Authoritative lifecycle status is external to the immutable reviewed payload and is resolved through the stable Promotion Record locator declared in `index.md`.
+Authoritative lifecycle status is evidenced through the stable Promotion Record locator declared in `index.md`. At `PROMOTE`, embedded lifecycle self-reference is normalized to the resulting Canonical state under `10-DECISION-STORAGE-SYSTEM.md` §8.
