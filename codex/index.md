@@ -2,7 +2,7 @@
 
 Release target: **v1.1.0**
 
-Authoritative lifecycle state is external to this immutable payload.
+Authoritative lifecycle state is evidenced by the Promotion Record; promoted package self-reference is made lifecycle-consistent by Promotion Lifecycle Normalization (`10-DECISION-STORAGE-SYSTEM.md` §8).
 
 ## Normative content
 
@@ -70,6 +70,8 @@ From this `codex/index.md` location, the equivalent public relative path is:
 The Working Repository may hold the mutable lifecycle record at a different Working-only path while the Candidate is under review. Publication MUST materialize it at the repository-root locator above without editing this reviewed payload.
 
 Until a valid Promotion Record at the stable public locator records Product Owner `PROMOTE` for the exact reviewed payload, the Candidate is **not Canon**.
+
+When `PROMOTE` occurs, Candidate-era lifecycle self-reference carried into the Canon package MUST be normalized atomically to the Canonical state under `10-DECISION-STORAGE-SYSTEM.md` §8; this status-only transformation is not a second product review cycle.
 
 Review evidence is linked from the Promotion Record and remains external to the immutable reviewed payload.
 
