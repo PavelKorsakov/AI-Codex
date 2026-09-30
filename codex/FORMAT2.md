@@ -93,8 +93,17 @@ At Candidate freeze:
 2. generate FORMAT-2;
 3. validate JSON records;
 4. verify source mapping/hash identity;
-5. freeze Markdown + generated FORMAT-2 together.
+5. freeze Markdown + generated FORMAT-2 together as the Reviewed Frozen Identity.
 
-At PROMOTE, mechanically re-verify the mapping.
+At `PROMOTE`:
+
+1. mechanically re-verify the reviewed Markdown ↔ FORMAT-2 mapping before lifecycle normalization;
+2. if no authored lifecycle/self-reference is normalized, preserve the reviewed representation unchanged;
+3. if Promotion Lifecycle Normalization (`10-DECISION-STORAGE-SYSTEM.md` §8) changes an authored source file represented in FORMAT-2, regenerate the affected record(s) from the normalized Markdown rather than editing JSONL by hand;
+4. revalidate schema, record/source identity, source hashes and full text equivalence;
+5. preserve unaffected semantic record content and stable record IDs/anchors wherever their source structure is unchanged;
+6. record the resulting FORMAT-2 identity as part of the Canonical Materialization Identity.
+
+A FORMAT-2 delta inherits the no-re-review promotion exception only when it is a deterministic consequence of the allowlisted lifecycle normalization. Any independent semantic or editorial FORMAT-2/Markdown change requires the ordinary new-Frozen-Revision/re-review path.
 
 Ordinary downstream readers do not compare both representations again unless new evidence indicates corruption or drift.
