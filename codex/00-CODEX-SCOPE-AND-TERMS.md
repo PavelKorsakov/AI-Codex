@@ -2,7 +2,7 @@
 
 Release target: **AI-Codex v1.1.0**
 
-Authoritative lifecycle status is external to this immutable payload and is resolved through the applicable Promotion Record.
+Authoritative lifecycle status is evidenced by the applicable Promotion Record. At `PROMOTE`, any embedded lifecycle self-reference MUST be made consistent through the narrowly scoped Promotion Lifecycle Normalization defined in `10-DECISION-STORAGE-SYSTEM.md` §8.
 
 ## 1. What the AI-Codex is
 
