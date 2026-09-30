@@ -47,9 +47,12 @@ Correction, if required → new Frozen Revision → disclosure check repeated �
       on the same Frozen Revision
 Promotion-Ready
     ↓ Product Owner PROMOTE (separate act, not a review vote)
+    ↓ atomic Promotion Lifecycle Normalization (§8): normalize only allowlisted
+      Candidate-era lifecycle/self-reference; regenerate only deterministic derived
+      FORMAT-2/manifest identities caused by that normalization
     ↓ public commit/publication — separately blocked if the verified disclosure evidence
       is absent or no longer matches the payload actually being published
-Project Canon (index.md + Canonical decision history + Current Canon)
+Project Canon (lifecycle-consistent Canonical Materialization + promotion evidence)
 ```
 
 In a **Same-Problem Multi-Compiler** workstream (`20-DECISION-METHODOLOGY.md` §6), "Compiler PASS" in the diagram above requires **PASS from every participating Compiler on the same frozen synthesis revision**, not from a single designated Synthesis Compiler alone (the Same-Problem Multi-Compiler unanimity rule). Compiler-to-Compiler cross-checking of a synthesis candidate is not itself independent Reviewer approval and does not substitute for the Reviewer stage that follows; see `40-ROLES-AND-AUTHORITY.md` §3 and `50-REVIEW-AND-GATES.md` §2.
@@ -75,7 +78,7 @@ Canon/
     ...
 ```
 
-The first promoted revision is `R001`; the next is `R002`, and so on. Intermediate Candidate edits, correction rounds, review rounds, Git commits, and failed promotion attempts do not consume Canonical Revision numbers. Historical `RNNN` directories are immutable. The component-level `index.md` MAY change only as part of promotion of a new Canonical Revision.
+The first promoted revision is `R001`; the next is `R002`, and so on. Intermediate Candidate edits, correction rounds, review rounds, Git commits, and failed promotion attempts do not consume Canonical Revision numbers. A newly promoted `RNNN` becomes immutable after its atomic Promotion Lifecycle Normalization completes. Historical `RNNN` directories are otherwise immutable, except for an explicit legacy lifecycle-self-reference normalization migration permitted by `60-PROJECT-ADOPTION-AND-VERSIONING.md` §3. The component-level `index.md` MAY change as part of promotion of a new Canonical Revision or that narrowly defined migration.
 
 A zero-memory contractor, Reviewer, Compiler, or Executor MUST be able to start from that file without repository archaeology. This is Dogma and is now the stable Canon interface the stable-interface rule required; it is no longer an open question whether a stable entry point exists — only its deeper filename/field layout remains open (below).
 
@@ -134,38 +137,83 @@ A stronger rule applies specifically to the **AI-Codex's own public repository**
 
 **Legacy case:** a repository that already contains raw working material in public history from before this architecture was adopted has a legacy hygiene defect distinct from normal operation, and that defect MUST be remediated explicitly. The exact remediation mechanism is project-specific and MAY include sanitization, migration, history replacement, repository replacement, or another justified method; this Codex does not prescribe one universal history-rewrite procedure. Once remediated, the legacy rule no longer participates in that project's normal lifecycle — §1's prospective architecture governs going forward.
 
-## 8. Promotion Record: lifecycle status is external to the immutable reviewed payload
+## 8. Promotion Record and atomic lifecycle self-reference normalization
 
-A reviewed Candidate's own content, including any lifecycle-status-at-freeze line it carries, is Frozen Revision content like any other (`00-CODEX-SCOPE-AND-TERMS.md` §4). It MUST NOT be edited merely to reflect later lifecycle progress.
+The Promotion Record remains authoritative lifecycle evidence, but a promoted Canon package MUST NOT contradict it with stale Candidate-era self-reference.
 
-This Codex therefore separates:
+This Codex distinguishes two immutable identities:
 
-- the reviewed payload's embedded **lifecycle status at freeze**, which is immutable historical metadata; and
-- the package's **authoritative current lifecycle status**, which is recorded externally in a Promotion Record.
+- the **Reviewed Frozen Identity** — the exact Candidate bytes that received the required gate-bearing `PASS` states;
+- the **Canonical Materialization Identity** — the resulting Canon package after the same `PROMOTE` transaction performs the narrowly allowed lifecycle normalization below.
+
+The Reviewed Frozen Identity MUST remain permanently traceable and MUST NOT be rewritten. The Canonical Materialization Identity MAY differ from it only through **Promotion Lifecycle Normalization** and its deterministic derived consequences.
+
+### 8.1. Promotion Lifecycle Normalization
+
+If reviewed authored material that will be materialized into Canon contains lifecycle/self-reference whose truth changes solely because the Product Owner has just issued a valid `PROMOTE`, the promotion transaction MUST normalize that material to the resulting Canonical state before the Canon materialization becomes current or visible.
+
+This normalization is the one closed exception to the ordinary any-edit-requires-re-review rule. It does **not** create a new Frozen Revision and does **not** require a second product review, but only when every constraint below is satisfied.
+
+Allowed changes are limited to lifecycle/self-reference mechanically implied by the same `PROMOTE`, including:
+
+- `Candidate`, `Working Candidate`, `Proposed`, `Frozen Candidate`, or `NOT CANON` lifecycle labels becoming `Canonical` / `Promoted`;
+- lifecycle-only title/self-description labels such as `Candidate entry point` becoming `Canonical Revision entry point`;
+- `target Canonical Revision` becoming `current Canonical Revision` when the coordinate itself is unchanged;
+- candidate-only conditionals such as “not Canon until required PASS + PROMOTE” becoming a Canonical statement and/or deterministic Promotion Record reference;
+- deterministic lifecycle locators/self-references whose only new fact is that promotion completed.
+
+The normalization MUST NOT change:
+
+- normative product requirements or their semantic force;
+- scope or non-goals;
+- product decisions, rationale, rejected alternatives, business rules, security/privacy/authority rules, dependency semantics, or implementation requirements;
+- non-lifecycle editorial content merely because cleanup would be convenient;
+- any value whose change is not a deterministic consequence of this same promotion.
+
+If any proposed change falls outside the allowlist, or if zero product-semantic diff cannot be mechanically established, the exception does not apply: the Candidate MUST be edited, frozen as a new Frozen Revision, and reviewed normally.
+
+### 8.2. Derived representations and identities
+
+When allowlisted lifecycle normalization changes authored Markdown that participates in FORMAT-2 or another deterministic derived representation, the promotion transaction MUST regenerate only the affected derived data, revalidate schema/source mapping/equivalence, and update the Canonical Materialization Identity accordingly.
+
+A manifest or payload-identity artifact MAY likewise change only to record:
+
+- the normalized authored-file identity;
+- mechanically regenerated derived-file identities;
+- the resulting Canonical Materialization Identity;
+- linkage back to the unchanged Reviewed Frozen Identity.
+
+Those derived changes inherit the no-re-review exception only to the extent they are deterministic consequences of the allowlisted lifecycle normalization.
+
+### 8.3. Promotion Record obligations
 
 A Promotion Record MUST identify unambiguously:
 
-- the exact reviewed public payload using a **public-safe immutable identity**;
+- the Reviewed Frozen Identity;
 - the required Compiler `PASS` state(s), where applicable;
-- the independent Reviewer `PASS` state(s) and the exact payload they reviewed;
+- the independent Reviewer `PASS` state(s) and the exact Reviewed Frozen Identity they reviewed;
 - the Product Owner `PROMOTE` authorization;
-- the resulting public release identity once issued.
+- whether Promotion Lifecycle Normalization occurred;
+- the resulting Canonical Materialization Identity;
+- the mechanically verified transformation class / zero-product-semantic-diff evidence when the two identities differ;
+- the resulting public release/Canonical Revision identity where applicable.
 
-A public-safe payload identity MAY be a deterministic content manifest, a public repository tree/commit identity, or another immutable public identifier. A public Promotion Record SHOULD avoid requiring disclosure of a private Working Repository commit identifier where a public-safe identity is available; this is additional guidance for public-bound packages, not yet elevated to Dogma beyond the general public-disclosure control already required (§6). Private Working provenance MAY retain private commit identifiers separately.
+A public-safe identity MAY be a deterministic content manifest, tree/commit identity, or another immutable public identifier. Private Working provenance MAY retain private commit identifiers separately.
 
-Creating or updating a Promotion Record MUST NOT require editing the reviewed payload it describes.
+### 8.4. Atomicity and failure
 
-A public-bound package SHOULD declare, before external review, a stable Promotion Record locator that will remain valid after promotion without changing the payload — this is a strong recommended practice for a package intended for public promotion, not yet Dogma for every workstream. The exact locator convention is project-level Interpretation unless separately standardized.
+`PROMOTE` and its required Promotion Lifecycle Normalization are one lifecycle transaction.
 
-Before a valid Promotion Record recording `PROMOTE` exists for a given payload, that payload is not Canon, regardless of any embedded historical status line.
+A project MUST NOT expose or declare the new Canonical Revision current while any required lifecycle self-reference normalization, derived-representation regeneration, or identity/provenance update remains incomplete.
 
-The exact Promotion Record file format is Interpretation. A simple deterministic repository artifact is sufficient. For a versioned Canon component, its Promotion Record/lifecycle evidence MUST be reachable through the deterministic per-`RNNN` locator exposed by the component `index.md`.
+If normalization or mechanical verification fails, promotion finalization stops. The prior Canon remains current; the Candidate remains Promotion-Ready unless the failure reveals product/content drift requiring a new review.
 
+After successful finalization, the Canonical Materialization Identity is the immutable Canon package for that `RNNN`, subject only to the explicit legacy migration rule in `60-PROJECT-ADOPTION-AND-VERSIONING.md` §3.
 ## 9. Human and machine representations of Canon
 
 Every v1.1.0 Canon component MUST retain human-readable authored Markdown as the authoritative representation.
 
-The same frozen semantic state MUST also have a generated machine representation in the JSONL/NDJSON family (FORMAT-2). FORMAT-2 MUST:
+The same reviewed product-semantic state MUST also have a generated machine representation in the JSONL/NDJSON family (FORMAT-2). After promotion normalization, FORMAT-2 MUST represent the Canonical Materialization's lifecycle self-reference while preserving the reviewed product semantics. FORMAT-2 MUST:
 
 - be generated from authored Markdown, not independently maintained by hand;
 - contain self-contained semantic records sufficient for ordinary machine consumption without mandatory Markdown fallback;
